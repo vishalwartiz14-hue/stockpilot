@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
 
 Route::get('/', function () {
-    return view('welcome');
+    if (auth()->check()) {
+        return redirect()->route('dashboard');
+    }
+    return redirect()->route('login');
 });
 Route::get('/dashboard', function () {
     return view('dashboard');
