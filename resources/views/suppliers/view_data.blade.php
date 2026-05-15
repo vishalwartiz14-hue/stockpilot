@@ -8,10 +8,6 @@ $supplier_edit              =   DB::table('access')->where('module_name','suppli
 $supplier_delete            =   DB::table('access')->where('module_name','suppliers')->where('role', $UserLogindetails->type)->where('delete','1')->count();
 ?>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <div class="space-y-6">
 
     <!-- PAGE HEADER -->
@@ -190,34 +186,7 @@ $(document).ready(function () {
 });
 </script>
 
-<!-- Optional Styling -->
-<style>
-table.dataTable thead th {
-    background: #f8fafc !important;
-    font-weight: 600;
-}
 
-.dataTables_wrapper {
-    padding: 15px;
-}
-
-.dataTables_filter input {
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    padding: 6px 12px;
-    margin-left: 6px;
-}
-
-.dataTables_length select {
-    border: 1px solid #cbd5e1;
-    border-radius: 10px;
-    padding: 5px 10px;
-}
-
-.dataTables_paginate .paginate_button {
-    border-radius: 8px !important;
-}
-</style>
         <!-- ANALYTICS PANEL -->
         <div class="bg-white rounded-2xl shadow border p-6">
 

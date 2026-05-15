@@ -4,8 +4,6 @@
 
 @section('content')
 
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-
 <div class="space-y-6">
 
     <!-- PAGE HEADER -->
