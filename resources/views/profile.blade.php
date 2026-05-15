@@ -1,19 +1,11 @@
 {{-- resources/views/profile.blade.php --}}
-
 @extends('layouts.app')
-
 @section('content')
-
 <div class="max-w-4xl mx-auto mt-10 bg-white shadow-lg rounded-xl p-8">
-
     <div class="flex items-center gap-6">
-
         {{-- Profile Image --}}
-        <img 
-            src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0D8ABC&color=fff" 
-            alt="Profile"
-            class="w-24 h-24 rounded-full border-4 border-blue-500"
-        >
+        <img src="https://ui-avatars.com/api/?name={{ auth()->user()->name }}&background=0D8ABC&color=fff" 
+        alt="Profile" class="w-24 h-24 rounded-full border-4 border-blue-500">
 
         {{-- User Info --}}
         <div>

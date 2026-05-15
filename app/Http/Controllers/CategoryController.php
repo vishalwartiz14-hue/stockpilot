@@ -53,12 +53,10 @@ class CategoryController extends Controller
         'status' => 'required|in:Active,Inactive',
     ]);
 
-    DB::table('categories')
-        ->where('id', $id)
-        ->update([
-            'name'       => $request->name,
-            'status'     => $request->status,
-            'updated_at' => now(),
+    DB::table('categories')->where('id', $id)->update([
+            'name'          => $request->name,
+            'status'        => $request->status,
+            'updated_at'    => now(),
         ]);
 
     return redirect()->back()->with('success', 'Category updated successfully');

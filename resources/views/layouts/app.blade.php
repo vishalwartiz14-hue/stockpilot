@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>StockPilot Enterprise</title>
 
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600,700" rel="stylesheet" />
 
@@ -20,8 +22,8 @@ $suppliers_view         =   DB::table('access')->where('module_name','suppliers'
 $procurement_view       =   DB::table('access')->where('module_name','procurement')->where('role', $UserLogindetails->type)->where('view','1')->count();
 $recipe_menu_costing    =   DB::table('access')->where('module_name','recipe_menu_costing')->where('role', $UserLogindetails->type)->where('view','1')->count();
 $waste_management       =   DB::table('access')->where('module_name','waste_management')->where('role', $UserLogindetails->type)->where('view','1')->count();
-
-
+$storage_locations_view =   DB::table('access')->where('module_name','storage_locations')->where('role', $UserLogindetails->type)->where('view','1')->count();
+$user_roles_view        =   DB::table('access')->where('module_name','user_roles')->where('role', $UserLogindetails->type)->where('view','1')->count();
 ?>
 <body class="bg-gradient-to-br from-slate-100 via-slate-50 to-blue-50 text-slate-900 font-[Figtree]">
 
@@ -43,59 +45,59 @@ $waste_management       =   DB::table('access')->where('module_name','waste_mana
 
         <!-- SEARCH -->
         <div class="p-4">
-            <input type="text" id="sidebarSearch" placeholder="Search modules..." class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition">
+            <input type="text" id="sidebarSearch" placeholder="Search modules..." class="flex items-center gap-3 px-4 py-2 rounded-lg bg-slate-100 text-slate-900 dark:bg-slate-900 dark:text-slate-100 border border-slate-200 dark:border-slate-700 transition">
         </div>
         <!-- NAV -->
         <nav class="flex-1 px-3 space-y-1 text-sm">
             <a href="/dashboard"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
                 {{ request()->segment(1) == 'dashboard' 
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 📊 Dashboard
             </a>
             <?php if($user_view != 0){ ?>
             <a href="{{ route('users.viewData') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
                {{ request()->segment(1) == 'users' || request()->segment(1) == 'add-user' || request()->segment(1) == 'edit-user'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 👤 Users
             </a>
             <?php } ?>
             <?php if($inventory_view != 0){ ?>
             <a href="{{ route('inventory.viewData') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
                {{ request()->segment(1) == 'inventory' || request()->segment(1) == 'add-inventory' || request()->segment(1) == 'edit-inventory'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 📦 Inventory
             </a>
             <?php } ?>
              <?php if($suppliers_view != 0){ ?>
             <a href="{{ route('suppliers.viewData') }}"
-            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
             {{ request()->segment(1) == 'suppliers' || request()->segment(1) == 'add-supplier' || request()->segment(1) == 'edit-supplier'  
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 🏢 Suppliers
             </a>
             <?php } ?>
             <?php if($procurement_view != 0) {?>
             <a href="{{ route('procurements.viewData') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
                 {{ request()->segment(1) == 'procurements' || request()->segment(1) == 'add-procurement' || request()->segment(1) == 'edit-procurement'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
                 🚚 Procurement
             </a> 
             <?php } ?>
           <?php if($recipe_menu_costing != 0){?>
             <a href="{{ route('recipe-menucosting.viewData') }}"
-            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
             {{ request()->segment(1) == 'recipe-menucosting' || request()->segment(1) == 'add-recipe' || request()->segment(1) == 'edit-recipe'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
 
                👨‍🍳  Recipe Menu Costing
 
@@ -103,61 +105,72 @@ $waste_management       =   DB::table('access')->where('module_name','waste_mana
             <?php } ?>
             <?php if($waste_management != 0){ ?>
             <a href="{{ route('waste-management.viewData') }}"
-            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+            class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
             {{ request()->segment(1) == 'waste-management' || request()->segment(1) == 'add-waste' || request()->segment(1) == 'edit-waste'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
-               �️  Waste Management
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
+               🗑️  Waste Management
             </a>
             <?php } ?>
              <a href="{{ route('ai-demands.viewData') }}"
-               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+               class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
               {{ request()->segment(1) == 'ai-demands' || request()->segment(1) == 'add-ai-demand' || request()->segment(1) == 'edit-ai-demand'
-                    ? 'bg-slate-800 text-white' 
-                    : 'text-slate-300 hover:bg-slate-800' }}">
+                    ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+                    : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
               🤖 AI Demand Intelligence
             </a>
 
             <!-- Settings Heading -->
-        <div class="px-4 pt-4 text-xs font-semibold text-slate-500 uppercase">
+        <div class="px-4 pt-4 text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">
             Settings
         </div>
+        <a href="{{ route('items.viewData') }}"
+        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
+        {{ request()->segment(1) == 'items' 
+        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
+         📦 Items
+        </a>
+
             <a href="{{ route('categories.viewData') }}" class="flex items-center gap-3 px-4 py-2 rounded-lg transition
             {{ request()->segment(1) == 'categories' || request()->segment(1) == 'add-category' || request()->segment(1) == 'edit-category'
-            ? 'bg-slate-800 text-white' 
-            : 'text-slate-300 hover:bg-slate-800' }}">        
+            ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+            : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">        
         📂 Categories
             </a>
+            <?php if($storage_locations_view != 0){ ?>
          <a href="{{ route('storage-locations.viewData') }}"
-        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
         {{ request()->segment(1) == 'storage-locations' 
-        ? 'bg-slate-800 text-white' 
-        : 'text-slate-300 hover:bg-slate-800' }}">
+        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' 
+        : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
            🏬 Storage Locations
         </a>
+        <?php } ?>
+        <?php if($user_roles_view != 0){ ?>
         <a href="{{ route('user-roles.viewData') }}"
-        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
         {{ request()->segment(1) == 'user-roles' 
-        ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800' }}">
+        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
             👥 User Roles
         </a>
+        <?php } ?>
     <a href="{{ route('access-control.viewData') }}"
-        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
         {{ request()->segment(1) == 'access-control' 
-        ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800' }}">
+        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
         🔐 Access Control
         </a>
 
         <a href="{{ route('profile.edit') }}"
-        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-300 hover:bg-slate-800 transition
+        class="flex items-center gap-3 px-4 py-2 rounded-lg text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition
         {{ request()->segment(1) == 'profile' 
-        ? 'bg-slate-800 text-white' : 'text-slate-300 hover:bg-slate-800' }}">
+        ? 'bg-slate-100 dark:bg-slate-800 text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800' }}">
          👤 Profile
         </a>
 
         </nav>
         <!-- FOOTER -->
-        <div class="p-4 border-t border-slate-800">
+        <div class="p-4 border-t border-slate-200 dark:border-slate-800">
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
                 <button class="w-full bg-red-500 hover:bg-red-600 py-2 rounded-lg text-sm font-medium">
@@ -233,6 +246,7 @@ $waste_management       =   DB::table('access')->where('module_name','waste_mana
 </body>
 </html>
 <script>
+   
 document.getElementById("sidebarSearch").addEventListener("keyup", function () {
     let value = this.value.toLowerCase();
     let links = document.querySelectorAll("nav a");

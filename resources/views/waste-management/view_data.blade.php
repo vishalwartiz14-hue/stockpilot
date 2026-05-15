@@ -18,9 +18,9 @@
 
         <div class="flex items-center gap-3">
 
-            <button class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 transition">
+            <!-- <button class="px-5 py-3 rounded-xl border border-slate-300 hover:bg-slate-50 transition">
                 Export Report
-            </button>
+            </button> -->
 
             <a href="{{ route('waste-management.addData') }}" class="px-5 py-3 rounded-xl bg-red-600 hover:bg-red-700 text-white shadow-lg">
                 + Record Waste
@@ -29,7 +29,7 @@
         </div>
 
     </div>
-
+@include('components.flash_message')
     <!-- KPI CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
@@ -39,7 +39,7 @@
             </p>
 
             <h2 class="text-3xl font-bold mt-2 text-red-600">
-                248 KG
+               ₹ <?php echo $totalWasteThisMonth; ?>
             </h2>
         </div>
 
@@ -49,7 +49,7 @@
             </p>
 
             <h2 class="text-3xl font-bold mt-2 text-orange-500">
-                ₹ 42,500
+                ₹ <?php echo $total_waste_cost?>
             </h2>
         </div>
 
@@ -59,7 +59,7 @@
             </p>
 
             <h2 class="text-3xl font-bold mt-2 text-green-600">
-                18%
+                <?php echo $wasteReduction; ?>%
             </h2>
         </div>
 
@@ -69,189 +69,214 @@
             </p>
 
             <h2 class="text-3xl font-bold mt-2 text-blue-600">
-                82%
+                <?php echo $sustainabilityScore; ?>%
             </h2>
         </div>
 
     </div>
 
-    <!-- MAIN GRID -->
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
+   <!-- MAIN GRID -->
+<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-        <!-- WASTE TRACKING TABLE -->
-        <div class="xl:col-span-2 bg-white rounded-2xl shadow border overflow-hidden">
+    <!-- WASTE TRACKING TABLE -->
+    <div class="xl:col-span-2 bg-white rounded-2xl shadow border overflow-hidden">
 
-            <div class="p-5 border-b flex items-center justify-between">
+        <!-- HEADER -->
+        <div class="p-5 border-b flex items-center justify-between">
 
-                <div>
-                    <h3 class="font-semibold text-slate-900">
-                        🗑 Waste Tracking
-                    </h3>
+            <div>
+                <h3 class="font-semibold text-slate-900">
+                    🗑 Waste Tracking
+                </h3>
 
-                    <p class="text-sm text-slate-500">
-                        Spoilage, expiry & kitchen waste monitoring
-                    </p>
-                </div>
-
-                <input type="text"
-                       placeholder="Search waste logs..."
-                       class="px-4 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none">
-
+                <p class="text-sm text-slate-500">
+                    Spoilage, expiry & kitchen waste monitoring
+                </p>
             </div>
 
-            <div class="overflow-x-auto">
-
-                <table class="w-full text-sm">
-
-                    <thead class="bg-slate-50 text-slate-600">
-                        <tr>
-                            <th class="text-left p-4">Item</th>
-                            <th class="text-left p-4">Category</th>
-                            <th class="text-left p-4">Waste Type</th>
-                            <th class="text-left p-4">Quantity</th>
-                            <th class="text-left p-4">Loss Value</th>
-                            <th class="text-left p-4">Status</th>
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y">
-
-                        <tr class="hover:bg-slate-50 transition">
-
-                            <td class="p-4 font-medium">
-                                Milk
-                            </td>
-
-                            <td class="p-4">
-                                Dairy
-                            </td>
-
-                            <td class="p-4">
-                                Expired Inventory
-                            </td>
-
-                            <td class="p-4">
-                                15 Liters
-                            </td>
-
-                            <td class="p-4 text-red-600 font-semibold">
-                                ₹ 2,500
-                            </td>
-
-                            <td class="p-4">
-                                <span class="px-3 py-1 rounded-full bg-red-100 text-red-600 text-xs">
-                                    High Loss
-                                </span>
-                            </td>
-
-                        </tr>
-
-                        <tr class="hover:bg-slate-50 transition">
-
-                            <td class="p-4 font-medium">
-                                Tomatoes
-                            </td>
-
-                            <td class="p-4">
-                                Fresh Produce
-                            </td>
-
-                            <td class="p-4">
-                                Kitchen Waste
-                            </td>
-
-                            <td class="p-4">
-                                8 KG
-                            </td>
-
-                            <td class="p-4 text-orange-500 font-semibold">
-                                ₹ 1,200
-                            </td>
-
-                            <td class="p-4">
-                                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">
-                                    Medium
-                                </span>
-                            </td>
-
-                        </tr>
-
-                    </tbody>
-
-                </table>
-
-            </div>
+            <input type="text"
+                   id="customSearch"
+                   placeholder="Search waste logs..."
+                   class="px-4 py-2 rounded-xl border border-slate-300 focus:ring-2 focus:ring-red-500 focus:outline-none">
 
         </div>
 
-        <!-- AI WASTE REDUCTION -->
-        <div class="bg-white rounded-2xl shadow border p-6">
+        <!-- TABLE -->
+        <div class="overflow-x-auto">
 
-            <h3 class="font-semibold text-slate-900 mb-5">
-                🤖 AI Waste Reduction
-            </h3>
+            <table id="manage_waste" class="display w-full text-sm">
 
-            <div class="space-y-4">
+                <thead class="bg-slate-50 text-slate-600">
+                    <tr>
+                        <th class="text-left p-4">Inventory Item</th>
+                        <th class="text-left p-4">Waste Type</th>
+                        <th class="text-left p-4">Unit</th>
+                        <th class="text-left p-4">Action</th>
+                    </tr>
+                </thead>
 
-                <div class="p-4 rounded-xl border bg-blue-50 border-blue-100">
+                <tbody class="divide-y">
 
-                    <div class="flex items-center justify-between">
-                        <span class="font-medium text-slate-800">
-                            Overstock Prevention
-                        </span>
+                    <?php foreach($wastes as $waste) {
 
-                        <span class="text-blue-600 font-bold">
-                            Active
-                        </span>
-                    </div>
+                        $itemDetails = DB::table('items')
+                                        ->where('id', $waste->item_id)
+                                        ->first();
+                    ?>
 
-                    <p class="text-sm text-slate-500 mt-2">
-                        AI detected excess stock in dairy inventory.
-                    </p>
+                    <tr class="hover:bg-slate-50 transition">
 
+                        <!-- ITEM -->
+                        <td class="p-4">
+                            <div>
+                                <p class="font-medium">
+                                    <?php echo $itemDetails ? $itemDetails->name : ''; ?>
+                                </p>
+                            </div>
+                        </td>
+
+                        <!-- WASTE TYPE -->
+                        <td class="p-4 text-green-600 font-medium">
+                            <?php echo $waste->waste_type; ?>
+                        </td>
+
+                        <!-- UNIT -->
+                        <td class="p-4">
+                            <?php echo $waste->unit; ?>
+                        </td>
+
+                        <!-- ACTION -->
+                        <td class="p-4">
+
+                            <a href="<?php echo url('edit-waste/'.$waste->id); ?>"
+                               class="px-3 py-1 rounded-lg bg-blue-100 text-blue-600 mr-2 hover:bg-blue-200 transition">
+                                Edit
+                            </a>
+
+                            <a href="<?php echo url('delete-waste/'.$waste->id); ?>"
+                               onclick="return confirm('Are you sure you want to delete this waste record?')"
+                               class="px-3 py-1 rounded-lg bg-red-100 text-red-600 hover:bg-red-200 transition">
+                                Delete
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    <?php } ?>
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+    <!-- AI WASTE REDUCTION -->
+    <div class="bg-white rounded-2xl shadow border p-6">
+
+        <h3 class="font-semibold text-slate-900 mb-5">
+            🤖 AI Waste Reduction
+        </h3>
+
+        <div class="space-y-4">
+
+            <!-- CARD -->
+            <div class="p-4 rounded-xl border bg-blue-50 border-blue-100">
+
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-slate-800">
+                        Overstock Prevention
+                    </span>
+
+                    <span class="text-blue-600 font-bold">
+                        Active
+                    </span>
                 </div>
 
-                <div class="p-4 rounded-xl border bg-yellow-50 border-yellow-100">
+                <p class="text-sm text-slate-500 mt-2">
+                    AI detected excess stock in dairy inventory.
+                </p>
 
-                    <div class="flex items-center justify-between">
-                        <span class="font-medium text-slate-800">
-                            Expiry Prediction
-                        </span>
+            </div>
 
-                        <span class="text-yellow-700 font-bold">
-                            12 Alerts
-                        </span>
-                    </div>
+            <!-- CARD -->
+            <div class="p-4 rounded-xl border bg-yellow-50 border-yellow-100">
 
-                    <p class="text-sm text-slate-500 mt-2">
-                        Inventory likely to expire within 3 days.
-                    </p>
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-slate-800">
+                        Expiry Prediction
+                    </span>
 
+                    <span class="text-yellow-700 font-bold">
+                        12 Alerts
+                    </span>
                 </div>
 
-                <div class="p-4 rounded-xl border bg-green-50 border-green-100">
+                <p class="text-sm text-slate-500 mt-2">
+                    Inventory likely to expire within 3 days.
+                </p>
 
-                    <div class="flex items-center justify-between">
-                        <span class="font-medium text-slate-800">
-                            Smarter Reordering
-                        </span>
+            </div>
 
-                        <span class="text-green-600 font-bold">
-                            Optimized
-                        </span>
-                    </div>
+            <!-- CARD -->
+            <div class="p-4 rounded-xl border bg-green-50 border-green-100">
 
-                    <p class="text-sm text-slate-500 mt-2">
-                        Reduced over-ordering by 18%.
-                    </p>
+                <div class="flex items-center justify-between">
+                    <span class="font-medium text-slate-800">
+                        Smarter Reordering
+                    </span>
 
+                    <span class="text-green-600 font-bold">
+                        Optimized
+                    </span>
                 </div>
+
+                <p class="text-sm text-slate-500 mt-2">
+                    Reduced over-ordering by 18%.
+                </p>
 
             </div>
 
         </div>
 
     </div>
+
+</div>
+
+<!-- DATATABLE SCRIPT -->
+<script>
+$(document).ready(function () {
+
+    // Initialize DataTable
+    var table = $('#manage_waste').DataTable({
+
+        responsive: true,
+
+        pageLength: 10,
+
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+
+        columnDefs: [
+            {
+                orderable: false,
+                targets: [4]
+            }
+        ]
+
+    });
+
+    // Custom Search
+    $('#customSearch').on('keyup', function () {
+        table.search(this.value).draw();
+    });
+
+});
+</script>
 
     <!-- SECOND GRID -->
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -393,5 +418,6 @@
     </div>
 
 </div>
+
 
 @endsection

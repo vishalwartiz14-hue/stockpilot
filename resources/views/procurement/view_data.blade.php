@@ -28,7 +28,7 @@ $procurement_delete            =   DB::table('access')->where('module_name','pro
         </a>
     <?php } ?>
     </div>
-
+@include('components.flash_message')
     <!-- KPI CARDS -->
     <div class="grid grid-cols-1 md:grid-cols-4 gap-5">
 
@@ -80,61 +80,56 @@ $procurement_delete            =   DB::table('access')->where('module_name','pro
 
             <div class="overflow-x-auto">
 
-                <table class="w-full text-sm">
+        <table id="manage_procurements" class="display w-full text-sm">
 
-                    <thead class="bg-slate-50 text-slate-600">
-                        <tr>
-                            <th class="text-left p-3">Item</th>
-                            <th class="text-left p-3">Current Stock</th>
-                            <th class="text-left p-3">Recommended Qty</th>
-                            <th class="text-left p-3">Preferred Vendor</th>
-                            <th class="text-left p-3">Priority</th>
-                        </tr>
-                    </thead>
+            <thead class="bg-slate-50 text-slate-600">
+                <tr>
+                    <th class="text-left p-4">Po Number</th>
+                    <th class="text-left p-4">Expected Delivery Date</th>
+                    <th class="text-center p-4">Action</th>
+                </tr>
+            </thead>
 
-                    <tbody class="divide-y">
+            <tbody class="divide-y">
 
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-medium">Chicken Breast</td>
-                            <td class="p-3">8 KG</td>
-                            <td class="p-3 text-blue-600 font-semibold">+40 KG</td>
-                            <td class="p-3">FreshFarm Foods</td>
-                            <td class="p-3">
-                                <span class="px-3 py-1 rounded-full bg-red-100 text-red-600 text-xs font-medium">
-                                    High
-                                </span>
-                            </td>
-                        </tr>
+                <?php foreach($procurements as $procurement) {                   
+                ?>
 
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-medium">Milk</td>
-                            <td class="p-3">12 L</td>
-                            <td class="p-3 text-blue-600 font-semibold">+25 L</td>
-                            <td class="p-3">DairyPro Ltd</td>
-                            <td class="p-3">
-                                <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs font-medium">
-                                    Medium
-                                </span>
-                            </td>
-                        </tr>
+                <tr class="hover:bg-slate-50 transition">
 
-                        <tr class="hover:bg-slate-50 transition">
-                            <td class="p-3 font-medium">Rice</td>
-                            <td class="p-3">120 KG</td>
-                            <td class="p-3 text-blue-600 font-semibold">+200 KG</td>
-                            <td class="p-3">GrainHub</td>
-                            <td class="p-3">
-                                <span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                                    Normal
-                                </span>
-                            </td>
-                        </tr>
+                    <td class="p-4">
+                        {{ $procurement->po_number }}
+                    </td>
+                    <td class="p-4">
+                        {{ print_date($procurement->expected_delivery_date) }}
+                    </td>
 
-                    </tbody>
+                    <td class="p-4">
+                        <a href="<?php echo route('procurements.singleData', ['id' => $procurement->id]); ?>" class="px-3 py-1 rounded-lg bg-blue-100 text-blue-600 mr-2">View</a>
+                        <a href="{{ route('procurements.editData', $procurement->id) }}"
+                            class="px-3 py-1 rounded-lg bg-blue-100 text-blue-600 mr-2 hover:bg-blue-200 transition">
+                                Edit
+                            </a>
+                        
+                        <a href="{{ route('procurements.viewData', ['delete_procurement' => base64_encode($procurement->id)]) }}"
+                           onclick="return confirm('Are you sure you want to delete this procurement <?php echo $procurement->po_number; ?>?')"
+                           class="px-3 py-1 rounded-lg bg-red-100 text-red-600">
+                            Delete
+                        </a>
+                        
 
-                </table>
+                    </td>
 
-            </div>
+                </tr>
+
+                <?php } ?>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
 
         </div>
 
@@ -193,81 +188,36 @@ $procurement_delete            =   DB::table('access')->where('module_name','pro
     </div>
 
     <!-- PURCHASE ORDER TABLE -->
-    <div class="bg-white rounded-2xl shadow border overflow-hidden">
-
-        <div class="p-5 border-b flex items-center justify-between">
-
-            <div>
-                <h3 class="font-semibold text-slate-900">
-                    📄 Purchase Orders
-                </h3>
-
-                <p class="text-sm text-slate-500">
-                    Track procurement orders & approval workflows
-                </p>
-            </div>
-
-            <button class="px-4 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-sm">
-                View All
-            </button>
-
-        </div>
-
-        <div class="overflow-x-auto">
-
-            <table class="w-full text-sm">
-
-                <thead class="bg-slate-50 text-slate-600">
-                    <tr>
-                        <th class="text-left p-4">PO Number</th>
-                        <th class="text-left p-4">Vendor</th>
-                        <th class="text-left p-4">Amount</th>
-                        <th class="text-left p-4">Delivery Date</th>
-                        <th class="text-left p-4">Status</th>
-                        <th class="text-left p-4">Approval</th>
-                    </tr>
-                </thead>
-
-                <tbody class="divide-y">
-
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-4 font-medium">PO-2041</td>
-                        <td class="p-4">FreshFarm Foods</td>
-                        <td class="p-4">₹ 18,500</td>
-                        <td class="p-4">12 May 2026</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-600 text-xs">
-                                In Transit
-                            </span>
-                        </td>
-                        <td class="p-4 text-green-600 font-medium">
-                            Approved
-                        </td>
-                    </tr>
-
-                    <tr class="hover:bg-slate-50 transition">
-                        <td class="p-4 font-medium">PO-2042</td>
-                        <td class="p-4">DairyPro Ltd</td>
-                        <td class="p-4">₹ 6,200</td>
-                        <td class="p-4">13 May 2026</td>
-                        <td class="p-4">
-                            <span class="px-3 py-1 rounded-full bg-yellow-100 text-yellow-700 text-xs">
-                                Pending
-                            </span>
-                        </td>
-                        <td class="p-4 text-orange-500 font-medium">
-                            Waiting
-                        </td>
-                    </tr>
-
-                </tbody>
-
-            </table>
-
-        </div>
-
-    </div>
+    
 
 </div>
 
+
+
+<!-- DataTable Script -->
+<script>
+$(document).ready(function () {
+
+    $('#manage_procurements').DataTable({
+
+        responsive: true,
+
+        pageLength: 10,
+
+        lengthMenu: [
+            [10, 25, 50, 100, -1],
+            [10, 25, 50, 100, "All"]
+        ],
+
+        columnDefs: [
+            {
+                orderable: false,
+                targets: [5]
+            }
+        ]
+
+    });
+
+});
+</script>
 @endsection

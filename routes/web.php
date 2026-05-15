@@ -12,9 +12,10 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\Settings\UserRolesController;
 use App\Http\Controllers\Settings\AccessControlController;
 use App\Http\Controllers\StorageLocationController;
+use App\Http\Controllers\AjaxController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatController;
-
+use App\Http\Controllers\Settings\ItemsController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -34,6 +35,8 @@ Route::get('/dashboard', function () {
     Route::any('/inventory', [InventoryController::class, 'viewData'])->name('inventory.viewData');
     Route::any('/ai-demands', [AiDemandsController::class, 'viewData'])->name('ai-demands.viewData');
     Route::any('/procurements', [ProcurementController::class, 'viewData'])->name('procurements.viewData');
+    Route::any('/procurement/{id}', [ProcurementController::class, 'singleData'])->name('procurements.singleData');
+    Route::match(['get', 'post', 'put'], '/procurements/edit-data/{id}', [ProcurementController::class, 'editData'])->name('procurements.editData');
     Route::any('/add-procurement', [ProcurementController::class, 'addData'])->name('procurements.addData');
     Route::any('/suppliers', [SuppliersController::class, 'viewData'])->name('suppliers.viewData');
     Route::any('/add-supplier', [SuppliersController::class, 'addData'])->name('suppliers.addData');
@@ -42,6 +45,7 @@ Route::get('/dashboard', function () {
     Route::any('/add-recipe', [RecipeMenuCostingController::class, 'addData'])->name('recipe-menucosting.addData');
     Route::any('/waste-management', [WasteManagementController::class, 'viewData'])->name('waste-management.viewData');
     Route::any('/add-waste', [WasteManagementController::class, 'addData'])->name('waste-management.addData');
+    Route::any('/edit-waste/{id}', [WasteManagementController::class, 'editData'])->name('waste-management.editData');
     Route::any('/categories', [CategoryController::class, 'viewData'])->name('categories.viewData');
     Route::any('/add-category', [CategoryController::class, 'addData'])->name('categories.addData');
     Route::any('/edit-category/{id}', [CategoryController::class, 'editData'])->name('categories.editData');
@@ -56,7 +60,14 @@ Route::get('/dashboard', function () {
     Route::any('/edit-supplier/{id}', [SuppliersController::class, 'editData'])->name('suppliers.edit-supplier');
     Route::any('/chat', [ChatController::class, 'send']);
     Route::get('/demo', [ChatController::class, 'index'])->name('chat.index');
-  
+    Route::any('/items', [ItemsController::class, 'viewData'])->name('items.viewData');
+    Route::any('/user-roles', [UserRolesController::class, 'viewData'])->name('user-roles.viewData');
+    Route::any('/add-item', [ItemsController::class, 'addData'])->name('items.addData');
+    Route::any('/edit-item/{id}', [ItemsController::class, 'editData'])->name('items.editData');
+Route::any('/get-items-by-category/{id}', [AjaxController::class, 'getItemsByCategory'])->name('items.getItemsByCategory');
+    Route::any('/get-items-by-supplier/{id}', [AjaxController::class, 'getItemsBySupplier'])->name('items.getItemsBySupplier');
+   
+   
     });
 
   

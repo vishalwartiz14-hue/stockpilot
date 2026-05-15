@@ -73,20 +73,14 @@ $inventory_delete            =   DB::table('access')->where('module_name','inven
 
             <tbody>
                 <?php foreach($inventory_items as $inventory_item){ 
-
-                    $category_name = DB::table('categories')
-                                        ->where('id', $inventory_item->category_id)
-                                        ->first();
-
-                    $storage_locations = DB::table('storage_locations')
-                                            ->where('id', $inventory_item->storage_location_id)
-                                            ->first();
+                    $itemDetails            =   DB::table('items')->where('id', $inventory_item->item_id)->first();
+                    $category_name          =   DB::table('categories')->where('id', $inventory_item->category_id)->first();
+                    $storage_locations      =   DB::table('storage_locations')->where('id', $inventory_item->storage_location_id)->first();
                 ?>
-
                 <tr class="border-t hover:bg-gray-50">
 
                     <td class="p-3">
-                        <?php echo $inventory_item->item_name; ?>
+                        <?php echo $itemDetails->name; ?>
                     </td>
 
                     <td class="p-3">
@@ -102,7 +96,7 @@ $inventory_delete            =   DB::table('access')->where('module_name','inven
                     </td>
 
                     <td class="p-3">
-                        <?php echo $inventory_item->unit; ?>
+                        <?php echo $itemDetails ? $itemDetails->unit : ''; ?>
                     </td>
 
                     <td class="p-3">
