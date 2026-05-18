@@ -7,22 +7,20 @@ use Illuminate\Support\Facades\URL;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
     public function register(): void
     {
         //
     }
 
-    /**
-     * Bootstrap any application services.
-     */
-   public function boot(): void
-{
-    if (app()->environment('production')) {
-        request()->server->set('HTTPS', 'on');
-        \URL::forceScheme('https');
+    public function boot(): void
+    {
+        // Force HTTPS + fix proxy headers
+        if (app()->environment('production')) {
+            // Force Laravel to treat request as HTTPS
+            if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
+                $_SERVER['HTTPS'] = 'on';
+            }
+            URL::forceScheme('https');
+        }
     }
-}
 }
