@@ -13,14 +13,7 @@ class AppServiceProvider extends ServiceProvider
     }
 
     public function boot(): void
-    {
-        // Force HTTPS + fix proxy headers
-        if (app()->environment('production')) {
-            // Force Laravel to treat request as HTTPS
-            if (!isset($_SERVER['HTTPS']) || $_SERVER['HTTPS'] !== 'on') {
-                $_SERVER['HTTPS'] = 'on';
-            }
-            URL::forceScheme('https');
-        }
-    }
+{
+    URL::forceScheme('https');
+}
 }
