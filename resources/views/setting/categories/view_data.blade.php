@@ -7,7 +7,6 @@ $category_add               =   DB::table('access')->where('module_name','catego
 $category_edit              =   DB::table('access')->where('module_name','categories')->where('role', $UserLogindetails->type)->where('edit','1')->count();
 $category_delete            =   DB::table('access')->where('module_name','categories')->where('role', $UserLogindetails->type)->where('delete','1')->count();
 ?>
-<div 
 <div class="flex justify-between items-center mb-6">
     <div>
         <h1 class="text-2xl font-bold text-gray-800">Categories</h1>

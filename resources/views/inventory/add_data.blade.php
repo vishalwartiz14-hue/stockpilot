@@ -1,7 +1,6 @@
 @extends('layouts.app')
 
 @section('content')
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
 <div class="max-w-3xl mx-auto bg-white shadow-lg rounded-xl p-6">
 
     <!-- Header -->

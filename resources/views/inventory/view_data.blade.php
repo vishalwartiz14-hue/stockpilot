@@ -10,10 +10,6 @@ $inventory_delete            =   DB::table('access')->where('module_name','inven
 
 ?>
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
-
-<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <div class="mb-6">
     <h1 class="text-2xl font-bold text-gray-800">Inventory</h1>
     <p class="text-gray-500">Simple stock overview</p>
@@ -153,28 +149,5 @@ $(document).ready(function () {
 });
 </script>
 
-<!-- Optional Styling -->
-<style>
-table.dataTable thead th {
-    background: #f3f4f6;
-    font-weight: 600;
-}
 
-.dataTables_wrapper {
-    padding-top: 10px;
-}
-
-.dataTables_filter input {
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: 6px 10px;
-    margin-left: 5px;
-}
-
-.dataTables_length select {
-    border: 1px solid #d1d5db;
-    border-radius: 8px;
-    padding: 5px;
-}
-</style>
 @endsection 
