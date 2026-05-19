@@ -97,8 +97,8 @@
             <a href="#pricing" class="hover:text-white transition">Pricing</a>
         </nav>
         <div class="flex items-center gap-2">
-            <a href="#" class="px-4 py-2 text-sm text-muted hover:text-white transition">Login</a>
-            <a href="#" class="px-4 py-2 text-sm rounded-full bg-white text-black font-medium hover:opacity-90 transition">Register</a>
+            <a href="{{ route('login') }}" class="px-4 py-2 text-sm text-muted hover:text-white transition">Login</a>
+            <a href="{{ route('register') }}" class="px-4 py-2 text-sm rounded-full bg-white text-black font-medium hover:opacity-90 transition">Register</a>
         </div>
     </div>
 </header>
@@ -122,7 +122,7 @@
     </p>
 
     <div class="mt-10 flex flex-wrap gap-3">
-        <a href="#" class="group btn-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold transition">
+        <a href="{{ route('dashboard') }}" class="group btn-primary inline-flex items-center gap-2 px-6 py-3.5 rounded-full font-semibold transition">
             Open Dashboard
             <svg class="w-4 h-4 group-hover:translate-x-0.5 transition" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
         </a>
