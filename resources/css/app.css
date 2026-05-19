@@ -2,3 +2,6 @@
 
 @source "../views/**/*.blade.php";
 @source "../**/*.blade.php";
+* {
+    border-color: rgb(226 232 240);
+}
